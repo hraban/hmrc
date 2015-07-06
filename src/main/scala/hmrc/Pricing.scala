@@ -1,18 +1,15 @@
 package hmrc
 
 /**
- * Pricing schemes for products. Currently only one pricing scheme is defined.
+ * Compute the price of a cart.
  *
  * Prices are in GBP pennies.
  *
  * @author Hraban Luyat <hraban@0brg.net>
  */
-object Pricing {
-  /**
-   * Default pricing.
-   */
-  def standard(product: Product.Product): Long = product match {
-    case Product.Apple => 60
-    case Product.Orange => 25
-  }
+trait Pricing {
+  def total(cart: Cart): Long
 }
+
+
+

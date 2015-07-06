@@ -26,7 +26,7 @@ class CheckoutSpec extends FlatSpec with Matchers {
   }
 
   "A checkout system" should "compute prices correctly" in {
-    val checkout = new Checkout(Pricing.standard)
+    val checkout = new Checkout(StandardPricing)
     checkout.compute(List.empty[Product.Product]) should be (0)
     checkout.compute(List(Apple)) should be (60)
     checkout.compute(List(Orange)) should be (25)
@@ -34,13 +34,13 @@ class CheckoutSpec extends FlatSpec with Matchers {
   }
 
   it should "compute from a list of strings using map" in {
-    val checkout = new Checkout(Pricing.standard)
+    val checkout = new Checkout(StandardPricing)
     checkout.compute(List("Apple").map(Product(_))) should be (60)
     checkout.compute(List("Orange", "Apple", "Orange").view.map(Product(_))) should be (110)
   }
 
   it should "compute prices for deals correctly" in {
-    val checkout = new Checkout(Pricing.deal)
+    val checkout = new Checkout(DealPricing)
     checkout.compute(List.empty[Product.Product]) should be (0)
     checkout.compute(List(Apple)) should be (60)
     checkout.compute(List(Apple, Apple)) should be (60)
@@ -55,7 +55,7 @@ class CheckoutSpec extends FlatSpec with Matchers {
   }
 
   it should "compute prices for deals correctly even when added out of order" in {
-    val checkout = new Checkout(Pricing.deal)
+    val checkout = new Checkout(DealPricing)
     checkout.compute(List(Apple, Orange)) should be (85)
     checkout.compute(List(Apple, Orange, Apple)) should be (85)
     checkout.compute(List(Orange, Apple, Orange, Apple, Orange)) should be (110)

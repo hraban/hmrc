@@ -5,8 +5,10 @@ package hmrc
  *
  * @author Hraban Luyat <hraban@0brg.net>
  */
-class Checkout(price: Product.Product => Long) {
-  def compute(products: Iterable[Product.Product]): Long = {
-    products.view.map(price).sum
+class Checkout(pricing: Pricing) {
+  def compute(cart: Cart): Long = {
+    pricing.total(cart)
   }
+
+  def compute(products: Traversable[Product.Product]): Long = compute(Cart.fromItems(products))
 }
