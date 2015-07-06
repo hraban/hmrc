@@ -1,8 +1,12 @@
 package hmrc
 
 /**
- * Created by hraban on 04/07/15.
+ * A checkout system usable to compute prices for baskets of products.
+ *
+ * @author Hraban Luyat <hraban@0brg.net>
  */
-class Checkout {
-
+class Checkout(price: Product.Product => Long) {
+  def compute(products: Iterable[Product.Product]): Long = {
+    products.view.map(price).sum
+  }
 }
